@@ -14,9 +14,9 @@ jobs:
       credentials:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      options: --privileged --ipc=host
     steps:
     - name: run-tests
+      shell: bash
       run: |
         echo "ec: Starting"
         pwd
