@@ -1,0 +1,21 @@
+name: tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+# TODO: wait until build only test
+jobs:
+  test-rmf:
+    name: Run senarios of rmf
+    runs-on: ubuntu-latest
+    container:
+      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:latest
+    - name: run-tests
+      run: |
+        echo "ec: Starting"
+        ros2 pkg list | grep rmf
+        echo "ec: Here I am"
+        ros2 run rmf_demos_tasks dispatch_loop -s s07 -f n12 -n 3 --use_sim_time
+        echo "ec: End "
+
