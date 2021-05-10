@@ -19,6 +19,9 @@ jobs:
     - name: run-tests
       run: |
         echo "ec: Starting"
+        pwd
+        ls
+        source /ros_entrypoint.sh
         ros2 pkg list | grep rmf
         echo "ec: Here I am"
         ros2 run rmf_demos_tasks dispatch_loop -s s07 -f n12 -n 3 --use_sim_time
