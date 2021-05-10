@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:latest
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      options: --privileged --ipc=host
     steps:
     - name: run-tests
       run: |
