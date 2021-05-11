@@ -89,7 +89,7 @@ class RMFSenarioTest:
                       " headless:=1")
         print(f" Initialize command [{launch_cmd}]")
         self.proc1 = subprocess.Popen(launch_cmd,
-                                      stdout=subprocess.DEVNULL,
+                                    #   stdout=subprocess.DEVNULL,
                                       stderr=subprocess.DEVNULL,
                                       shell=True, preexec_fn=os.setsid)
 
@@ -155,6 +155,7 @@ class RMFSenarioTest:
         for req in task_requests:
             print(" - request a task: ", req)
             r = requests.post(api_server_url + 'submit_task', json=req)
+            time.sleep(1)
             if (r.status_code != 200):
                 print("Failed to connect api-server: not 200")
                 return False
