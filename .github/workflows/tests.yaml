@@ -4,15 +4,12 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-env:
-  # TODO: wait until build only test
-  IMG_TAG: ${{ github.event_name == 'pull_request' && 'latest' || 'test' }}
 jobs:
   test-rmf:
     name: Run senarios of rmf
     runs-on: ubuntu-latest
     container:
-      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ IMG_TAG }}
+      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ github.event_name == 'pull_request' && 'latest' || 'test' }
       credentials:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
