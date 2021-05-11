@@ -89,8 +89,8 @@ class RMFSenarioTest:
                       " headless:=1")
         print(f" Initialize command [{launch_cmd}]")
         self.proc1 = subprocess.Popen(launch_cmd,
-                                      stdout=subprocess.DEVNULL,
-                                      stderr=subprocess.DEVNULL,
+                                    #   stdout=subprocess.DEVNULL,
+                                    #   stderr=subprocess.DEVNULL,
                                       shell=True, preexec_fn=os.setsid)
 
         # Here we will check if the robot state is avail to determine whether

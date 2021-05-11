@@ -23,6 +23,7 @@ jobs:
       shell: bash
       run: |
         source /ros_entrypoint.sh
+        export HOME=/root         # this is important for .gazebo/models
         echo "ec: Run Test "
         python3 rmf/tests/integration_test.py
         echo "ec: End "
