@@ -28,11 +28,11 @@ office_tasks = [
     {"task_type": "Loop", "start_time": 0, "description":
      {"start_name": "coe", "finish_name": "supplies", "num_loops": 1}},
     # TODO: Fix delivery not working
-    # {"task_type": "Delivery", "start_time": 0, "description":
-    #  {"pickup_place_name": "pantry",
-    #   "pickup_dispenser": "coke_dispenser",
-    #   "dropoff_place_name": "hardware_2",
-    #   "dropoff_ingestor": "coke_ingestor"}},
+    {"task_type": "Delivery", "start_time": 0, "description":
+     {"pickup_place_name": "pantry",
+      "pickup_dispenser": "coke_dispenser",
+      "dropoff_place_name": "hardware_2",
+      "dropoff_ingestor": "coke_ingestor"}},
     {"task_type": "Loop", "start_time": 0, "description":
      {"start_name": "lounge", "finish_name": "coe", "num_loops": 1}}
 ]
@@ -89,8 +89,8 @@ class RMFSenarioTest:
                       " headless:=1")
         print(f" Initialize command [{launch_cmd}]")
         self.proc1 = subprocess.Popen(launch_cmd,
-                                    #   stdout=subprocess.DEVNULL,
-                                    #   stderr=subprocess.DEVNULL,
+                                      stdout=subprocess.DEVNULL,
+                                      stderr=subprocess.DEVNULL,
                                       shell=True, preexec_fn=os.setsid)
 
         # Here we will check if the robot state is avail to determine whether
