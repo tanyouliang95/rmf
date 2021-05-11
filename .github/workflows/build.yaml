@@ -10,12 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: build rmf image and push to gh registry
+      # Merge to main, build image as: rmf_demes:latest
+      - name: build rmf image and push to gh registry, default tag latest
+        if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           repository: ${{ github.repository }}/rmf_demos
-          push: ${{ github.event_name == 'push' }} # update registry only during push to main
+          push: true
           tags: latest
+      # Open PR, build image as: rmf_demos:test
+      - name: build rmf image, tag as test
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/rmf_demos
+          push: true
+          tags: test
