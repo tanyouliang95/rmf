@@ -9,7 +9,7 @@ jobs:
     name: Run senarios of rmf
     runs-on: ubuntu-latest
     container:
-      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ github.event_name == 'pull_request' && 'latest' || 'test' }
+      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ github.event_name == 'pull_request' && 'latest' || 'test' }}
       credentials:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
