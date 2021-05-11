@@ -15,6 +15,10 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        path: rmf/
     - name: run-tests
       shell: bash
       run: |
@@ -25,5 +29,8 @@ jobs:
         ros2 pkg list | grep rmf
         echo "ec: Here I am"
         ros2 run rmf_demos_tasks dispatch_loop -s s07 -f n12 -n 3 --use_sim_time
+        echo "ec: Run Test "
+        python rmf/tests/integration_test.py
         echo "ec: End "
+        
 
