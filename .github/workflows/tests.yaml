@@ -4,13 +4,15 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-# TODO: wait until build only test
+env:
+  # TODO: wait until build only test
+  IMG_TAG: ${{ github.event_name == 'pull_request' && 'latest' || 'test' }}
 jobs:
   test-rmf:
     name: Run senarios of rmf
     runs-on: ubuntu-latest
     container:
-      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:latest
+      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ env.IMG_TAG }}
       credentials:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -23,7 +25,7 @@ jobs:
       shell: bash
       run: |
         source /ros_entrypoint.sh
-        export HOME=/root         # this is important for .gazebo/models
-        echo "ec: Run Test "
+        export HOME=/root         # this is crucial for setting a correct path to .gazebo/models
+        echo "Start Integration Test"
         python3 rmf/tests/integration_test.py
-        echo "ec: End "
+        echo "Finish Integration Test"

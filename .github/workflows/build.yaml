@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Merge to main, build image as: rmf_demes:latest
+      # Merge to main/nightly, build image as: rmf_demos:latest
       - name: build rmf image and push to gh registry, default tag latest
         if: ${{ github.event_name == 'push' }}
         uses: docker/build-push-action@v1

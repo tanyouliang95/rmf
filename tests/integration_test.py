@@ -89,17 +89,19 @@ class RMFSenarioTest:
                       " headless:=1")
         print(f" Initialize command [{launch_cmd}]")
         self.proc1 = subprocess.Popen(launch_cmd,
-                                    #   stdout=subprocess.DEVNULL,
-                                    #   stderr=subprocess.DEVNULL,
+                                      stdout=subprocess.DEVNULL,
+                                      stderr=subprocess.DEVNULL,
                                       shell=True, preexec_fn=os.setsid)
 
         # Here we will check if the robot state is avail to determine whether
         # the rmf world has launched successfully.
         # Periodically Checks the tasks till timeout
         start = time.time()
+        robot_states_res = None
         while True:
             if ((time.time() - start) > timeout_sec):
-                raise RuntimeError(f"TimeOut in launching: {launch_cmd}")
+                raise RuntimeError(f"TimeOut in launching: {launch_cmd}, "
+                                   f"Get request, res: {robot_states_res}")
             time.sleep(2)
             try:
                 r = requests.get(url=api_server_url + "robot_list")
@@ -107,7 +109,9 @@ class RMFSenarioTest:
                 continue
             if (r.status_code != 200):
                 continue
-            if (len(r.json()) == total_robots):
+
+            robot_states_res = r.json()
+            if (len(robot_states_res) == total_robots):
                 break
 
         # Warm up
