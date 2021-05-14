@@ -21,8 +21,10 @@ import signal
 import requests
 import time
 import json
+from functools import partial
 
 api_server_url = 'http://localhost:8080/'
+print = partial(print, flush=True)
 
 office_tasks = [
     {"task_type": "Loop", "start_time": 0, "description":
@@ -204,7 +206,7 @@ def main(args=None):
     del office
 
     if not success:
-        raise RuntimeError
+        raise RuntimeError("requested tasks in office are not fully completed")
 
     time.sleep(5)  # ensures previous pids was fully tore down
 
@@ -217,7 +219,7 @@ def main(args=None):
     del airport
 
     if not success:
-        raise RuntimeError
+        raise RuntimeError("requested tasks in airport are not fully completed")
 
     time.sleep(5)  # ensures pids was fully tore down
 
@@ -230,7 +232,7 @@ def main(args=None):
     del clinic
 
     if not success:
-        raise RuntimeError
+        raise RuntimeError("requested tasks in clinic are not fully completed")
 
     print("====================== Successfully End All ======================")
 
