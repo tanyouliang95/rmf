@@ -206,6 +206,8 @@ def main(args=None):
     if not success:
         raise RuntimeError
 
+    time.sleep(5)  # ensures previous pids was fully tore down
+
     # ###########################################################################
     # # Test Senario 2: Airport World with 3 requests
 
@@ -217,11 +219,13 @@ def main(args=None):
     if not success:
         raise RuntimeError
 
+    time.sleep(5)  # ensures pids was fully tore down
+
     # ###########################################################################
     # # Test Senario 3: Clinic World with 4 requests
 
     clinic = RMFSenarioTest("clinic", 4)
-    success = clinic.start(clinic_tasks, 600)
+    success = clinic.start(clinic_tasks, 650)
     clinic.stop()
     del clinic
 
