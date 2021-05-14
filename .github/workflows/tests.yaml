@@ -1,0 +1,29 @@
+name: tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test-rmf:
+    name: Run senarios of rmf
+    runs-on: ubuntu-latest
+    container:
+      # Will use tag test if a open pr, for main, use latest
+      image: docker.pkg.github.com/tanyouliang95/rmf/rmf_demos:${{ github.event_name == 'pull_request' && 'test' || 'latest' }}
+      credentials:
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        path: rmf/
+    - name: run-tests
+      shell: bash
+      run: |
+        source /ros_entrypoint.sh
+        export HOME=/root         # this is crucial for setting a correct path to .gazebo/models
+        echo "Start Integration Test"
+        python3 rmf/tests/integration_test.py
+        echo "Finish Integration Test"
